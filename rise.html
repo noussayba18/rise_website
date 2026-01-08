@@ -85,6 +85,12 @@
             --bg-color: var(--light-bg-color);
             --beige: var(--light-beige);
             --plant-green: var(--light-plant-green);
+                        /* RGB values needed for shadows & blur (RESPONSIVE FIX) */
+            --accent-pink-rgb: 255, 138, 168;
+            --soft-purple-rgb: 216, 180, 254;
+            --card-rgb: 254, 245, 224;
+            --text-primary-rgb: 42, 42, 42;
+
         }
 
         body.dark-mode {
@@ -108,7 +114,12 @@
             --bg-color: var(--dark-bg-color);
             --beige: var(--dark-beige);
             --plant-green: var(--dark-rain-blue);
-        }
+            --accent-pink-rgb: 209, 122, 154;
+            --soft-purple-rgb: 158, 122, 254;
+            --card-rgb: 45, 32, 56;
+            --text-primary-rgb: 232, 224, 240;
+
+                    }
 
         /* Happy Mode Decorations */
         .happy-decoration {
@@ -641,7 +652,7 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 3rem;
             margin-top: 3rem;
         }
@@ -743,7 +754,7 @@
 
         .pricing-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 3rem;
             margin-top: 3rem;
             max-width: 1000px;
@@ -1188,6 +1199,55 @@
                 min-width: 130px;
             }
         }
+        /* Mobile Menu Button */
+.menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--text-primary);
+}
+
+/* Mobile Navigation */
+@media (max-width: 968px) {
+    .menu-btn {
+        display: block;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--card);
+        flex-direction: column;
+        gap: 1.2rem;
+        padding: 1.5rem;
+        display: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+}
+
+.hero-image,
+.phone-mockup {
+    max-width: 100%;
+}
+a, button {
+    max-width: 100%;
+}
+@media (max-width: 768px) {
+    .happy-decoration,
+    .sad-decoration {
+        display: none;
+    }
+}
+
+
     </style>
 </head>
 <body>
@@ -1205,6 +1265,8 @@
             </div>
             <span class="logo-text">Rise</span>
         </div>
+        <button class="menu-btn" id="menuBtn">☰</button>
+
         <ul class="nav-links">
             <li><a href="#features">Features</a></li>
             <li><a href="#why">Why Rise</a></li>
@@ -1517,7 +1579,13 @@
             
             // Add click event to mode toggle
             modeToggle.addEventListener('click', toggleMode);
-            
+            const menuBtn = document.getElementById('menuBtn');
+            const navLinks = document.querySelector('.nav-links');
+
+            menuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+                        
             // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
