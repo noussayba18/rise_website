@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rise - Your Mental Wellness Companion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Color Palette - Darker Overall */
+        :root {
+            /* Light Mode (Happy Mode) */
+            --light-bg-top: #FFC9D9;
+            --light-bg-mid: #FFD0B5;
+            --light-bg-bottom: #FFE8C8;
+            --light-card: #FEF5E0;
+            --light-text-primary: #2A2A2A;
+            --light-text-secondary: #5A5A5A;
+            --light-accent-pink: #FF8AA8;
+            --light-accent-green: #4DC893;
+            --light-accent-yellow: #FFD166;
+            --light-accent-orange: #FFB05C;
+            --light-accent-peach: #FF9E7A;
+            --light-soft-purple: #D8B4FE;
+            --light-peach: #FFB5D1;
+            --light-mint: #B5EAD7;
+            --light-yellow: #FFEAA7;
+            --light-sky: #B5D8FF;
+            --light-coral: #FFA8B8;
+            --light-bg-color: #F5EFE6;
+            --light-beige: #FFEED9;
+            --light-plant-green: #7BCF7B;
+            
+            /* Dark Mode (Sad Mode) */
+            --dark-bg-top: #2A1B3D;
+            --dark-bg-mid: #3A2B4D;
+            --dark-bg-bottom: #1A1229;
+            --dark-card: #2D2038;
+            --dark-text-primary: #E8E0F0;
+            --dark-text-secondary: #B0A8C0;
+            --dark-accent-pink: #D17A9A;
+            --dark-accent-green: #3DA87C;
+            --dark-accent-yellow: #D4B066;
+            --dark-accent-orange: #D4944C;
+            --dark-accent-peach: #D58A6A;
+            --dark-soft-purple: #9E7AFE;
+            --dark-peach: #D595B1;
+            --dark-mint: #85CAB7;
+            --dark-yellow: #D4CA87;
+            --dark-sky: #85B8DF;
+            --dark-coral: #D58898;
+            --dark-bg-color: #251E2D;
+            --dark-beige: #D4C4A9;
+            --dark-rain-blue: #8AA8D8;
+            
+            /* Current theme (default to light) */
+            --bg-top: var(--light-bg-top);
+            --bg-mid: var(--light-bg-mid);
+            --bg-bottom: var(--light-bg-bottom);
+            --card: var(--light-card);
+            --text-primary: var(--light-text-primary);
+            --text-secondary: var(--light-text-secondary);
+            --accent-pink: var(--light-accent-pink);
+            --accent-green: var(--light-accent-green);
+            --accent-yellow: var(--light-accent-yellow);
+            --accent-orange: var(--light-accent-orange);
+            --accent-peach: var(--light-accent-peach);
+            --soft-purple: var(--light-soft-purple);
+            --peach: var(--light-peach);
+            --mint: var(--light-mint);
+            --yellow: var(--light-yellow);
+            --sky: var(--light-sky);
+            --coral: var(--light-coral);
+            --bg-color: var(--light-bg-color);
+            --beige: var(--light-beige);
+            --plant-green: var(--light-plant-green);
+        }
+
+        body.dark-mode {
+            --bg-top: var(--dark-bg-top);
+            --bg-mid: var(--dark-bg-mid);
+            --bg-bottom: var(--dark-bg-bottom);
+            --card: var(--dark-card);
+            --text-primary: var(--dark-text-primary);
+            --text-secondary: var(--dark-text-secondary);
+            --accent-pink: var(--dark-accent-pink);
+            --accent-green: var(--dark-accent-green);
+            --accent-yellow: var(--dark-accent-yellow);
+            --accent-orange: var(--dark-accent-orange);
+            --accent-peach: var(--dark-accent-peach);
+            --soft-purple: var(--dark-soft-purple);
+            --peach: var(--dark-peach);
+            --mint: var(--dark-mint);
+            --yellow: var(--dark-yellow);
+            --sky: var(--dark-sky);
+            --coral: var(--dark-coral);
+            --bg-color: var(--dark-bg-color);
+            --beige: var(--dark-beige);
+            --plant-green: var(--dark-rain-blue);
+        }
+
+        /* Happy Mode Decorations */
+        .happy-decoration {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        body:not(.dark-mode) .happy-decoration {
+            opacity: 0.7;
+        }
+
+        .star {
+            width: 4px;
+            height: 4px;
+            background: var(--yellow);
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px var(--yellow);
+            animation: twinkle 4s infinite alternate;
+        }
+
+        .sparkle {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-pink);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: sparkle 3s infinite;
+        }
+
+        .plant {
+            position: absolute;
+            width: 30px;
+            height: 40px;
+        }
+
+        .plant-stem {
+            width: 4px;
+            height: 25px;
+            background: var(--plant-green);
+            position: absolute;
+            bottom: 0;
+            left: 13px;
+        }
+
+        .plant-leaf {
+            width: 15px;
+            height: 10px;
+            background: var(--plant-green);
+            border-radius: 50% 0 50% 0;
+            position: absolute;
+        }
+
+        .leaf-1 {
+            top: 5px;
+            left: 0;
+            transform: rotate(-20deg);
+        }
+
+        .leaf-2 {
+            top: 10px;
+            right: 0;
+            transform: rotate(20deg);
+        }
+
+        .leaf-3 {
+            top: 18px;
+            left: 3px;
+            transform: rotate(-10deg);
+            width: 12px;
+            height: 8px;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.2; transform: rotate(0deg) scale(0.8); }
+            50% { opacity: 1; transform: rotate(180deg) scale(1.3); }
+        }
+
+        @keyframes plant-grow {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.8); opacity: 0.5; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+        }
+
+        /* Sad Mode Decorations */
+        .sad-decoration {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        body.dark-mode .sad-decoration {
+            opacity: 0.5;
+        }
+
+        .cloud {
+            width: 80px;
+            height: 30px;
+            background: rgba(180, 200, 240, 0.25);
+            border-radius: 50px;
+            position: relative;
+            animation: cloud-drift 30s infinite linear;
+        }
+
+        .cloud:before, .cloud:after {
+            content: '';
+            position: absolute;
+            background: rgba(180, 200, 240, 0.25);
+            border-radius: 50%;
+        }
+
+        .cloud:before {
+            width: 40px;
+            height: 40px;
+            top: -20px;
+            left: 15px;
+        }
+
+        .cloud:after {
+            width: 30px;
+            height: 30px;
+            top: -15px;
+            right: 15px;
+        }
+
+        .rain-drop {
+            width: 2px;
+            height: 20px;
+            background: linear-gradient(to bottom, transparent, var(--plant-green));
+            border-radius: 1px;
+            animation: raindrop-fall 2s infinite linear;
+            position: absolute;
+        }
+
+        .raindrop-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes cloud-drift {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(calc(100vw + 100px)); }
+        }
+
+        @keyframes raindrop-fall {
+            0% { transform: translateY(-50px); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        /* Navigation - Fixed height and spacing */
+        nav {
+            position: fixed;
+            width: 100%;
+            background: rgba(var(--card-rgb), 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 5%; /* Reduced padding */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            transition: all 0.5s ease;
+            height: 70px; /* Fixed height */
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .logo-icon {
+            width: 40px; /* Smaller logo */
+            height: 40px; /* Smaller logo */
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--accent-pink), var(--soft-purple));
+        }
+
+        .logo-icon img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 1.5rem; /* Smaller text */
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-pink), var(--soft-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem; /* Reduced gap */
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem; /* Smaller font */
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-pink);
+        }
+
+        /* Mode Switcher Container - Horizontal with CTA Button */
+        .nav-right-container {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem; /* Reduced gap */
+        }
+
+        .mode-switcher {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mode-label {
+            font-size: 0.8rem; /* Smaller font */
+            font-weight: 600;
+            color: var(--text-primary);
+            opacity: 0.8;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+
+        .mode-toggle {
+            width: 48px; /* Smaller toggle */
+            height: 26px; /* Smaller toggle */
+            background: linear-gradient(135deg, var(--accent-pink), var(--soft-purple));
+            border-radius: 18px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .mode-toggle:before {
+            content: '';
+            position: absolute;
+            width: 18px; /* Smaller toggle button */
+            height: 18px; /* Smaller toggle button */
+            border-radius: 50%;
+            background: white;
+            top: 4px;
+            left: 4px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+        }
+
+        body.dark-mode .mode-toggle:before {
+            transform: translateX(22px);
+        }
+
+        .mode-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.8rem; /* Smaller icons */
+            transition: all 0.5s ease;
+            z-index: 1;
+        }
+
+        .sun-icon {
+            left: 5px;
+            color: var(--accent-orange);
+        }
+
+        .moon-icon {
+            right: 5px;
+            color: var(--soft-purple);
+        }
+
+        body:not(.dark-mode) .sun-icon {
+            opacity: 1;
+        }
+
+        body:not(.dark-mode) .moon-icon {
+            opacity: 0.3;
+        }
+
+        body.dark-mode .sun-icon {
+            opacity: 0.3;
+        }
+
+        body.dark-mode .moon-icon {
+            opacity: 1;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--accent-pink), var(--soft-purple));
+            color: white;
+            padding: 0.6rem 1.3rem; /* Smaller padding */
+            border-radius: 18px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem; /* Smaller font */
+            transition: transform 0.3s, box-shadow 0.3s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(var(--accent-pink-rgb), 0.4);
+        }
+
+        /* Hero Section - Added padding-top to account for fixed nav */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 90px 8% 4rem; /* Increased top padding to 90px */
+            background: linear-gradient(135deg, var(--bg-top) 0%, var(--bg-mid) 50%, var(--bg-bottom) 100%);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.8s ease;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(var(--accent-pink-rgb), 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(var(--soft-purple-rgb), 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -150px;
+            left: -150px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+            z-index: 1;
+            margin-top: 0; /* Reset any margin */
+        }
+
+        .hero h1 {
+            font-size: 3.5rem; /* Slightly smaller */
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            transition: color 0.5s ease;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-pink), var(--soft-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem; /* Slightly smaller */
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            transition: color 0.5s ease;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .primary-btn {
+            background: linear-gradient(135deg, var(--accent-pink), var(--soft-purple));
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(var(--accent-pink-rgb), 0.4);
+        }
+
+        .secondary-btn {
+            background: var(--card);
+            color: var(--accent-pink);
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 2px solid var(--accent-pink);
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .secondary-btn:hover {
+            background: var(--accent-pink);
+            color: white;
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .phone-mockup {
+            width: 320px; /* Slightly smaller */
+            height: 650px; /* Slightly smaller */
+            background: var(--card);
+            border-radius: 35px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+            padding: 12px;
+            position: relative;
+            animation: floatPhone 3s ease-in-out infinite;
+            transition: all 0.5s ease;
+        }
+
+        @keyframes floatPhone {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 50%, var(--bg-bottom) 100%);
+            border-radius: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            transition: all 0.5s ease;
+        }
+
+        .phone-logo {
+            width: 90px; /* Smaller logo */
+            height: 90px; /* Smaller logo */
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(var(--accent-pink-rgb), 0.3);
+            background: linear-gradient(135deg, var(--accent-pink), var(--soft-purple));
+        }
+
+        .phone-logo img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 8%;
+            background: var(--card);
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.8rem; /* Slightly smaller */
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            transition: color 0.5s ease;
+        }
+
+        .section-header p {
+            font-size: 1.1rem; /* Slightly smaller */
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            transition: color 0.5s ease;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            padding: 2.5rem;
+            border-radius: 20px;
+            background: var(--bg-color);
+            transition: transform 0.3s, box-shadow 0.3s, background 0.5s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: var(--accent-pink);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card:nth-child(1) .feature-icon { background: linear-gradient(135deg, var(--peach), var(--coral)); }
+        .feature-card:nth-child(2) .feature-icon { background: linear-gradient(135deg, var(--yellow), var(--accent-yellow)); }
+        .feature-card:nth-child(3) .feature-icon { background: linear-gradient(135deg, var(--mint), var(--accent-green)); }
+        .feature-card:nth-child(4) .feature-icon { background: linear-gradient(135deg, var(--soft-purple), var(--accent-pink)); }
+        .feature-card:nth-child(5) .feature-icon { background: linear-gradient(135deg, var(--yellow), var(--accent-orange)); }
+        .feature-card:nth-child(6) .feature-icon { background: linear-gradient(135deg, var(--accent-pink), var(--coral)); }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            transition: color 0.5s ease;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            transition: color 0.5s ease;
+        }
+
+        /* Why Choose Section - Updated with yellow/purple palette */
+        .why-choose {
+            padding: 6rem 8%;
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--soft-purple) 100%);
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .why-card {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s, background 0.5s ease;
+            border: 1px solid rgba(var(--text-primary-rgb), 0.1);
+        }
+
+        .why-card:hover {
+            transform: scale(1.05);
+        }
+
+        .why-card h3 {
+            color: var(--accent-pink);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            transition: color 0.5s ease;
+        }
+
+        .why-card p {
+            color: var(--text-secondary);
+            transition: color 0.5s ease;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 6rem 8%;
+            background: var(--card);
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-card {
+            background: var(--bg-color);
+            border-radius: 25px;
+            padding: 3rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.5s ease;
+            position: relative;
+            border: 2px solid var(--bg-color);
+        }
+
+        .pricing-card.featured {
+            background: linear-gradient(135deg, var(--accent-pink), var(--soft-purple));
+            color: white;
+            transform: scale(1.05);
+            border: none;
+        }
+
+        .pricing-card.featured h3,
+        .pricing-card.featured .price,
+        .pricing-card.featured li {
+            color: white;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--accent-pink);
+            transition: color 0.5s ease;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 1.5rem 0;
+            color: var(--text-primary);
+            transition: color 0.5s ease;
+        }
+
+        .price span {
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 0.8rem 0;
+            color: var(--text-secondary);
+            transition: color 0.5s ease;
+        }
+
+        .pricing-features li:before {
+            content: "✓ ";
+            color: var(--accent-green);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .pricing-card.featured .pricing-features li {
+            color: white;
+        }
+
+        .pricing-card.featured .pricing-features li:before {
+            color: white;
+        }
+
+        /* CTA Section - Updated for better mobile responsiveness */
+        .cta-section {
+            padding: 6rem 8%;
+            background: linear-gradient(135deg, var(--accent-pink), var(--soft-purple));
+            text-align: center;
+            color: white;
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            font-size: 2.8rem; /* Slightly smaller */
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem; /* Slightly smaller */
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section .primary-btn {
+            background: white;
+            color: var(--accent-pink);
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+            min-width: 200px;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .cta-section .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 4rem 8% 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--accent-pink), var(--soft-purple));
+        }
+
+        .footer-logo-icon img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: #FFD4A3;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #FFD4A3;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            color: #888;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            .nav-right-container {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .nav-right-container {
+                gap: 0.8rem;
+            }
+            
+            .mode-label {
+                font-size: 0.75rem;
+            }
+            
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 85px 5% 3rem; /* Adjusted padding */
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .phone-mockup {
+                width: 280px;
+                height: 560px;
+                margin-top: 2rem;
+            }
+
+            .phone-logo {
+                width: 80px;
+                height: 80px;
+            }
+
+            .section-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .section-header p {
+                font-size: 1rem;
+            }
+            
+            /* CTA Section mobile adjustments */
+            .cta-section {
+                padding: 4rem 5%;
+            }
+            
+            .cta-section h2 {
+                font-size: 2.2rem;
+            }
+            
+            .cta-section p {
+                font-size: 1.1rem;
+                padding: 0 1rem;
+            }
+            
+            .cta-section .primary-btn {
+                padding: 0.9rem 2rem;
+                font-size: 1rem;
+                min-width: 180px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mode-label {
+                display: none;
+            }
+            
+            .nav-right-container {
+                gap: 0.7rem;
+            }
+            
+            .cta-btn {
+                padding: 0.55rem 1.1rem;
+                font-size: 0.8rem;
+            }
+            
+            .logo-text {
+                font-size: 1.3rem;
+            }
+            
+            .logo-icon {
+                width: 35px;
+                height: 35px;
+            }
+            
+            /* CTA Section tablet adjustments */
+            .cta-section h2 {
+                font-size: 2rem;
+                margin-bottom: 1.2rem;
+            }
+            
+            .cta-section p {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+            
+            .cta-section .primary-btn {
+                padding: 0.85rem 1.8rem;
+                font-size: 0.95rem;
+                min-width: 160px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.7rem 4%;
+                height: 65px;
+            }
+            
+            .hero {
+                padding: 75px 4% 2rem; /* Adjusted padding */
+            }
+            
+            .nav-right-container {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 0.4rem;
+            }
+            
+            .mode-switcher {
+                order: 2;
+            }
+            
+            .cta-btn {
+                order: 1;
+                padding: 0.5rem 1rem;
+                font-size: 0.75rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .primary-btn, .secondary-btn {
+                width: 100%;
+                max-width: 250px;
+                text-align: center;
+                padding: 0.9rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            /* CTA Section mobile phone adjustments */
+            .cta-section {
+                padding: 3rem 4%;
+            }
+            
+            .cta-section h2 {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+            }
+            
+            .cta-section p {
+                font-size: 0.95rem;
+                margin-bottom: 1.8rem;
+                line-height: 1.6;
+                padding: 0;
+            }
+            
+            .cta-section .primary-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+                min-width: 140px;
+                width: 100%;
+                max-width: 250px;
+                display: block;
+                margin: 0 auto;
+            }
+        }
+        
+        @media (max-width: 350px) {
+            .logo-text {
+                font-size: 1.1rem;
+            }
+            
+            .logo-icon {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .mode-toggle {
+                width: 42px;
+                height: 24px;
+            }
+            
+            .mode-toggle:before {
+                width: 16px;
+                height: 16px;
+                top: 4px;
+                left: 4px;
+            }
+            
+            body.dark-mode .mode-toggle:before {
+                transform: translateX(18px);
+            }
+            
+            /* CTA Section extra small phone adjustments */
+            .cta-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .cta-section p {
+                font-size: 0.9rem;
+            }
+            
+            .cta-section .primary-btn {
+                padding: 0.7rem 1.3rem;
+                font-size: 0.85rem;
+                min-width: 130px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Happy Mode Decorations -->
+    <div class="happy-decoration" id="happyDecorations"></div>
+    
+    <!-- Sad Mode Decorations -->
+    <div class="sad-decoration" id="sadDecorations"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo-container">
+            <div class="logo-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/3079/3079165.png" alt="Rise Logo">
+            </div>
+            <span class="logo-text">Rise</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#why">Why Rise</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+        </ul>
+        
+        <!-- Right side container with mode switcher and CTA button -->
+        <div class="nav-right-container">
+            <div class="mode-switcher">
+                <span class="mode-label" id="modeLabel">Happy Mode</span>
+                <div class="mode-toggle" id="modeToggle">
+                    <div class="mode-icon sun-icon">☀️</div>
+                    <div class="mode-icon moon-icon">🌙</div>
+                </div>
+            </div>
+            <a href="#download" class="cta-btn">Download App</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Find Your Balance with <span>Rise</span></h1>
+            <p>Your personal companion for mental wellness, mindful habits, and daily balance in a screen-dominated world.</p>
+            <div class="hero-buttons">
+                <a href="#download" class="primary-btn">Get Started Free</a>
+                <a href="#features" class="secondary-btn">Learn More</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="phone-mockup">
+                <div class="phone-screen">
+                    <div class="phone-logo">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3079/3079165.png" alt="Rise Logo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="section-header">
+            <h2>Everything You Need for Mental Wellness</h2>
+            <p>Rise combines habit tracking, emotional reflection, and mindfulness activities into one beautiful experience.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h3>Habit Management</h3>
+                <p>Create and track personal habits with reminders and progress indicators to build consistency in your daily routines.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💙</div>
+                <h3>Mood Journaling</h3>
+                <p>Write reflections and track your emotions through an integrated calendar view that connects feelings to your daily experiences.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧘</div>
+                <h3>Mindful Activities</h3>
+                <p>Engage in breathing exercises, coloring, digital plant growing, and bubble popping to relax and disconnect from stress.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Progress Insights</h3>
+                <p>Visual statistics showing your improvements in habit consistency, journaling frequency, and wellness metrics over time.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💧</div>
+                <h3>Wellness Tracking</h3>
+                <p>Monitor water intake and screen time with daily summaries and gentle reminders to maintain healthier routines.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3>Rewards & Motivation</h3>
+                <p>Earn points and achievements for consistency and progress, building a positive connection between productivity and wellness.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Section -->
+    <section id="why" class="why-choose">
+        <div class="section-header">
+            <h2>Why Choose Rise?</h2>
+            <p>Unlike traditional apps, Rise integrates everything you need in one place.</p>
+        </div>
+        <div class="why-grid">
+            <div class="why-card">
+                <h3>All-in-One Solution</h3>
+                <p>No need for multiple apps—habits, moods, and mindfulness in one place.</p>
+            </div>
+            <div class="why-card">
+                <h3>Gamified Motivation</h3>
+                <p>Stay engaged with rewards, achievements, and fun challenges.</p>
+            </div>
+            <div class="why-card">
+                <h3>Data-Driven Insights</h3>
+                <p>Understand your patterns with visual analytics and progress tracking.</p>
+            </div>
+            <div class="why-card">
+                <h3>Designed for You</h3>
+                <p>Beautiful, calming interface that makes self-care enjoyable.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="section-header">
+            <h2>Choose Your Plan</h2>
+            <p>Start free, upgrade anytime to unlock premium features.</p>
+        </div>
+        <div class="pricing-cards">
+            <div class="pricing-card">
+                <h3>Free</h3>
+                <div class="price">0 DZD<span>/month</span></div>
+                <ul class="pricing-features">
+                    <li>Basic mood tracker</li>
+                    <li>Daily journaling</li>
+                    <li>Water intake tracking</li>
+                    <li>Limited mindfulness activities</li>
+                    <li>Basic progress insights</li>
+                </ul>
+                <a href="#download" class="secondary-btn">Get Started</a>
+            </div>
+            <div class="pricing-card featured">
+                <h3>Premium</h3>
+                <div class="price">999 DZD<span>/month</span></div>
+                <ul class="pricing-features">
+                    <li>Unlimited habits</li>
+                    <li>Advanced analytics</li>
+                    <li>All mindfulness games</li>
+                    <li>Custom challenges</li>
+                    <li>Priority support</li>
+                    <li>Ad-free experience</li>
+                </ul>
+                <a href="#download" class="primary-btn">Upgrade Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="download" class="cta-section">
+        <h2>Ready to Rise?</h2>
+        <p>Join thousands of users building healthier, more balanced lives.</p>
+        <a href="#" class="primary-btn">Coming Soon to Play Store</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <div class="footer-logo-icon">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3079/3079165.png" alt="Rise Logo">
+                    </div>
+                    <span class="footer-logo-text">Rise</span>
+                </div>
+                <p>Your mental wellness companion for a balanced, focused, and healthier life.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Product</h3>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#download">Download</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">TikTok</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Rise. All rights reserved. Made with 💜 for mental wellness.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mode toggle functionality
+        const modeToggle = document.getElementById('modeToggle');
+        const modeLabel = document.getElementById('modeLabel');
+        const body = document.body;
+        const happyDecorations = document.getElementById('happyDecorations');
+        const sadDecorations = document.getElementById('sadDecorations');
+        
+        // Initialize decorations
+        function initializeDecorations() {
+            // Create happy decorations (stars, sparkles, and plants)
+            for (let i = 0; i < 40; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${Math.random() * 100}vh`;
+                star.style.animationDelay = `${Math.random() * 4}s`;
+                happyDecorations.appendChild(star);
+                
+                if (i < 20) {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.left = `${Math.random() * 100}vw`;
+                    sparkle.style.top = `${Math.random() * 100}vh`;
+                    sparkle.style.animationDelay = `${Math.random() * 3}s`;
+                    happyDecorations.appendChild(sparkle);
+                }
+                
+                if (i < 8) {
+                    const plant = document.createElement('div');
+                    plant.className = 'plant';
+                    plant.style.left = `${Math.random() * 100}vw`;
+                    plant.style.bottom = '0';
+                    plant.style.animation = `plant-grow ${5 + Math.random() * 5}s infinite`;
+                    plant.style.animationDelay = `${Math.random() * 3}s`;
+                    
+                    const stem = document.createElement('div');
+                    stem.className = 'plant-stem';
+                    
+                    const leaf1 = document.createElement('div');
+                    leaf1.className = 'plant-leaf leaf-1';
+                    
+                    const leaf2 = document.createElement('div');
+                    leaf2.className = 'plant-leaf leaf-2';
+                    
+                    const leaf3 = document.createElement('div');
+                    leaf3.className = 'plant-leaf leaf-3';
+                    
+                    plant.appendChild(stem);
+                    plant.appendChild(leaf1);
+                    plant.appendChild(leaf2);
+                    plant.appendChild(leaf3);
+                    
+                    happyDecorations.appendChild(plant);
+                }
+            }
+            
+            // Create sad decorations (clouds and rain)
+            for (let i = 0; i < 6; i++) {
+                const cloud = document.createElement('div');
+                cloud.className = 'cloud';
+                cloud.style.top = `${10 + Math.random() * 40}vh`;
+                cloud.style.animationDelay = `${Math.random() * 15}s`;
+                cloud.style.opacity = `${0.3 + Math.random() * 0.3}`;
+                sadDecorations.appendChild(cloud);
+                
+                // Add raindrops container to each cloud
+                const raindropContainer = document.createElement('div');
+                raindropContainer.className = 'raindrop-container';
+                
+                // Add multiple raindrops
+                for (let j = 0; j < 10; j++) {
+                    const rainDrop = document.createElement('div');
+                    rainDrop.className = 'rain-drop';
+                    rainDrop.style.left = `${5 + j * 8}px`;
+                    rainDrop.style.animationDelay = `${Math.random() * 2}s`;
+                    raindropContainer.appendChild(rainDrop);
+                }
+                
+                cloud.appendChild(raindropContainer);
+            }
+        }
+        
+        // Toggle between Happy Mode (Light) and Sad Mode (Dark)
+        function toggleMode() {
+            const isDarkMode = body.classList.toggle('dark-mode');
+            
+            // Update label and toggle state
+            if (isDarkMode) {
+                modeLabel.textContent = 'Sad Mode';
+                modeToggle.style.background = 'linear-gradient(135deg, var(--soft-purple), var(--accent-pink))';
+            } else {
+                modeLabel.textContent = 'Happy Mode';
+                modeToggle.style.background = 'linear-gradient(135deg, var(--accent-pink), var(--soft-purple))';
+            }
+            
+            // Add emotional transition effect
+            body.style.opacity = '0.8';
+            setTimeout(() => {
+                body.style.opacity = '1';
+            }, 300);
+            
+            // Save preference to localStorage
+            localStorage.setItem('riseMode', isDarkMode ? 'dark' : 'light');
+        }
+        
+        // Check for saved preference
+        function initializeMode() {
+            const savedMode = localStorage.getItem('riseMode');
+            if (savedMode === 'dark') {
+                body.classList.add('dark-mode');
+                modeLabel.textContent = 'Sad Mode';
+                modeToggle.style.background = 'linear-gradient(135deg, var(--soft-purple), var(--accent-pink))';
+            }
+        }
+        
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeDecorations();
+            initializeMode();
+            
+            // Add click event to mode toggle
+            modeToggle.addEventListener('click', toggleMode);
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70, // Adjusted for smaller nav
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
