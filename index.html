@@ -307,22 +307,27 @@
             gap: 0.8rem;
         }
 
-        .logo-icon {
-            width: 40px; /* Smaller logo */
-            height: 40px; /* Smaller logo */
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background: linear-gradient(135deg, var(--accent-pink), var(--soft-purple));
-        }
+/* ===== NAVBAR LOGO FIX ===== */
+.logo-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: transparent;   /* ✅ remove white */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;          /* ✅ remove square feel */
+    overflow: visible;
+}
 
-        .logo-icon img {
-            width: 80%;
-            height: 80%;
-            object-fit: contain;
-        }
+
+.logo-icon img {
+    width: 65%;
+    height: 65%;
+    object-fit: contain;
+        filter: drop-shadow(0 6px 14px rgba(0,0,0,0.25));
+}
+
 
         .logo-text {
             font-size: 1.5rem; /* Smaller text */
@@ -358,6 +363,66 @@
             align-items: center;
             gap: 1.2rem; /* Reduced gap */
         }
+        /* ===== Language Selector ===== */
+.lang-selector {
+    position: relative;
+    font-size: 0.85rem;
+}
+
+.lang-btn {
+    background: transparent;
+    border: 2px solid var(--soft-purple);
+    color: var(--text-primary);
+    padding: 0.45rem 0.9rem;
+    border-radius: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.lang-btn:hover {
+    background: rgba(var(--soft-purple-rgb), 0.12);
+}
+
+.lang-arrow {
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+/* Dropdown */
+.lang-menu {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background: var(--card);
+    border: 1px solid rgba(var(--text-primary-rgb), 0.15);
+    border-radius: 10px;
+    list-style: none;
+    padding: 0.3rem 0;
+    min-width: 140px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    display: none;
+    z-index: 2000;
+}
+
+.lang-menu li {
+    padding: 0.5rem 0.9rem;
+    cursor: pointer;
+    transition: background 0.25s ease;
+}
+
+.lang-menu li:hover {
+    background: var(--soft-purple);
+    color: white;
+}
+
+/* Show menu */
+.lang-selector.open .lang-menu {
+    display: block;
+}
 
         .mode-switcher {
             display: flex;
@@ -438,6 +503,22 @@
         body.dark-mode .moon-icon {
             opacity: 1;
         }
+        body.dark-mode .logo-icon {
+     box-shadow: none !important;
+    background: transparent !important;
+}
+.logo-container:hover .logo-icon {
+    box-shadow: none !important;
+    background: transparent !important;
+}
+body.dark-mode .logo-icon img,
+body.dark-mode .phone-logo img,
+body.dark-mode .footer-logo-icon img {
+    filter: drop-shadow(0 8px 20px rgba(158,122,254,0.45));
+}
+
+
+
 
         .cta-btn {
             background: linear-gradient(135deg, var(--accent-pink), var(--soft-purple));
@@ -602,24 +683,30 @@
             gap: 1rem;
             transition: all 0.5s ease;
         }
+/* ===== PHONE LOGO FIX ===== */
+.phone-logo {
+    width: auto;
+    height: auto;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+    animation: logoFloat 4s ease-in-out infinite;
+}
 
-        .phone-logo {
-            width: 90px; /* Smaller logo */
-            height: 90px; /* Smaller logo */
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(var(--accent-pink-rgb), 0.3);
-            background: linear-gradient(135deg, var(--accent-pink), var(--soft-purple));
-        }
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+.phone-logo img {
+    width: 80px;        /* control size here */
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 22px rgba(0,0,0,0.35));
+}
 
-        .phone-logo img {
-            width: 80%;
-            height: 80%;
-            object-fit: contain;
-        }
+
 
         /* Features Section */
         .features {
@@ -883,44 +970,51 @@ grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
         }
 
         /* Footer */
-        footer {
-            background: #1a1a1a;
-            color: white;
-            padding: 4rem 8% 2rem;
-            position: relative;
-            z-index: 1;
-        }
+       footer {
+    background: var(--card);
+    color: var(--text-primary);
+    padding: 4rem 8% 2rem;
+    position: relative;
+    z-index: 1;
+    transition: background 0.5s ease, color 0.5s ease;
+}
+
 
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 3rem;
             margin-bottom: 3rem;
+            padding-bottom: 2rem;
         }
-
         .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 1rem;
-        }
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
 
-        .footer-logo-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background: linear-gradient(135deg, var(--accent-pink), var(--soft-purple));
-        }
+/* ===== FOOTER LOGO FIX ===== */
+.footer-logo-icon {
+    width: auto;
+    height: auto;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+}
 
-        .footer-logo-icon img {
-            width: 80%;
-            height: 80%;
-            object-fit: contain;
-        }
+
+.footer-logo-icon img {
+    width: 48px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 18px rgba(0,0,0,0.3));
+}
+
+
+
 
         .footer-logo-text {
             font-size: 1.5rem;
@@ -928,10 +1022,6 @@ grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             color: white;
         }
 
-        .footer-section h3 {
-            margin-bottom: 1.5rem;
-            color: #FFD4A3;
-        }
 
         .footer-section ul {
             list-style: none;
@@ -941,22 +1031,29 @@ grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             margin-bottom: 0.8rem;
         }
 
-        .footer-section a {
-            color: #ccc;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
+.footer-section h3 {
+    margin-bottom: 1.5rem;
+    color: var(--accent-pink);
+}
 
-        .footer-section a:hover {
-            color: #FFD4A3;
-        }
+.footer-section a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s;
+}
 
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #333;
-            color: #888;
-        }
+.footer-section a:hover {
+    color: var(--accent-pink);
+}
+
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(var(--text-primary-rgb), 0.1);
+    color: var(--text-secondary);
+}
+
 
         /* Responsive */
         @media (max-width: 1100px) {
@@ -1062,6 +1159,9 @@ grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             .logo-icon {
                 width: 35px;
                 height: 35px;
+                background: transparent;
+                 animation: logoFloat 6s ease-in-out infinite;
+                 box-shadow: none;
             }
             
             /* CTA Section tablet adjustments */
@@ -1199,7 +1299,9 @@ grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
                 min-width: 130px;
             }
         }
-        /* Mobile Menu Button */
+ /* ===== RESPONSIVE IMPROVEMENTS ===== */
+
+/* Mobile Menu Button */
 .menu-btn {
     display: none;
     background: none;
@@ -1207,32 +1309,653 @@ grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     font-size: 1.8rem;
     cursor: pointer;
     color: var(--text-primary);
+    z-index: 1001;
+    padding: 0.5rem;
+    margin-left: auto;
+    transition: transform 0.3s ease;
 }
 
-/* Mobile Navigation */
+.menu-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Mobile Navigation Container */
+.mobile-nav-container {
+    display: none;
+}
+
+/* ===== SMOOTH ANIMATIONS ===== */
+.nav-links,
+.nav-right-container,
+.mobile-nav-container {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== RTL FIXES ===== */
+body.rtl .menu-btn {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+body.rtl .mobile-nav-container.active {
+    text-align: right;
+}
+
+body.rtl .mobile-lang-selector.open .mobile-lang-menu {
+    left: auto;
+    right: 1.5rem;
+}
+
+@media (max-width: 480px) {
+    body.rtl .mobile-lang-selector.open .mobile-lang-menu {
+        left: auto;
+        right: 1rem;
+    }
+}
+
+/* ===== DESKTOP (969px and above) ===== */
+@media (min-width: 969px) {
+    /* Show desktop nav items */
+    .nav-links {
+        display: flex;
+        position: static;
+        flex-direction: row;
+        width: auto;
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+        max-height: none;
+        animation: slideInDown 0.5s ease;
+    }
+    
+    .nav-right-container {
+        display: flex;
+        animation: slideInDown 0.5s ease 0.1s backwards;
+    }
+    
+    /* Hide mobile elements */
+    .menu-btn {
+        display: none !important;
+    }
+    
+    .mobile-nav-container {
+        display: none !important;
+    }
+    
+    /* Hero layout for desktop */
+    .hero {
+        flex-direction: row;
+    }
+    
+    .hero-content {
+        order: 1;
+    }
+    
+    .hero-image {
+        order: 2;
+        animation: floatPhone 3s ease-in-out infinite;
+    }
+}
+
+/* ===== MOBILE (968px and below) ===== */
 @media (max-width: 968px) {
+    /* HIDE ALL DESKTOP NAV ITEMS */
+    .nav-links,
+    .nav-right-container {
+        display: none !important;
+    }
+    
+    /* Show hamburger menu */
     .menu-btn {
         display: block;
+        animation: fadeIn 0.5s ease;
     }
-
-    .nav-links {
-        position: absolute;
+    
+    /* Mobile navigation container - SMOOTH ANIMATION */
+    .mobile-nav-container {
+        position: fixed;
         top: 70px;
         left: 0;
         width: 100%;
         background: var(--card);
+        padding: 0;
         flex-direction: column;
-        gap: 1.2rem;
-        padding: 1.5rem;
-        display: none;
         box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        z-index: 1000;
+        max-height: 0;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .mobile-nav-container.active {
+        display: flex;
+        max-height: 600px;
+        opacity: 1;
+        transform: translateY(0);
+        padding: 1.5rem;
+        animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Mobile nav links - STAGGERED ANIMATION */
+    .mobile-nav-links {
+        list-style: none;
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+    
+    .mobile-nav-links li {
+        width: 100%;
+        border-bottom: 1px solid rgba(var(--text-primary-rgb), 0.1);
+        opacity: 0;
+        transform: translateX(-20px);
+        transition: all 0.3s ease;
+    }
+    
+    .mobile-nav-container.active .mobile-nav-links li {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    .mobile-nav-container.active .mobile-nav-links li:nth-child(1) { transition-delay: 0.1s; }
+    .mobile-nav-container.active .mobile-nav-links li:nth-child(2) { transition-delay: 0.15s; }
+    .mobile-nav-container.active .mobile-nav-links li:nth-child(3) { transition-delay: 0.2s; }
+    
+    .mobile-nav-links li:last-child {
+        border-bottom: none;
+    }
+    
+    .mobile-nav-links a {
+        display: block;
+        padding: 1rem 0;
+        width: 100%;
+        font-size: 1.1rem;
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s, transform 0.3s;
+    }
+    
+    .mobile-nav-links a:hover {
+        color: var(--accent-pink);
+        transform: translateX(5px);
+    }
+    
+    body.rtl .mobile-nav-links a:hover {
+        transform: translateX(-5px);
+    }
+    
+    /* Mobile nav right container */
+    .mobile-nav-right {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        width: 100%;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(var(--text-primary-rgb), 0.1);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.4s ease 0.2s;
+    }
+    
+    .mobile-nav-container.active .mobile-nav-right {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Mode switcher in mobile menu */
+    .mobile-mode-switcher {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.3s ease 0.25s;
+    }
+    
+    .mobile-nav-container.active .mobile-mode-switcher {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .mobile-mode-label {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+    
+    .mobile-mode-toggle {
+        width: 52px;
+        height: 28px;
+        background: linear-gradient(135deg, var(--accent-pink), var(--soft-purple));
+        border-radius: 18px;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.5s ease;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    
+    .mobile-mode-toggle:before {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: white;
+        top: 4px;
+        left: 4px;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 2;
+    }
+    
+    body.dark-mode .mobile-mode-toggle:before {
+        transform: translateX(24px);
+    }
+    
+    /* Language selector in mobile menu - FIXED */
+    .mobile-lang-selector {
+        width: 100%;
+        position: relative;
+        z-index: 1002;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.3s ease 0.3s;
+    }
+    
+    .mobile-nav-container.active .mobile-lang-selector {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .mobile-lang-btn {
+        width: 100%;
+        background: transparent;
+        border: 2px solid var(--soft-purple);
+        color: var(--text-primary);
+        padding: 0.8rem 1rem;
+        border-radius: 12px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 1002;
+    }
+    
+    .mobile-lang-btn:hover {
+        background: rgba(var(--soft-purple-rgb), 0.12);
+        transform: translateY(-2px);
+    }
+    
+    .mobile-lang-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--card);
+        border: 1px solid rgba(var(--text-primary-rgb), 0.15);
+        border-radius: 10px;
+        list-style: none;
+        padding: 0.5rem 0;
+        margin-top: 0.5rem;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        display: none;
+        z-index: 2001;
+        overflow: visible !important;
+        animation: fadeInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .mobile-lang-selector.open .mobile-lang-menu {
+        display: block;
+        position: fixed;
+        top: auto;
+        left: 1.5rem;
+        right: 1.5rem;
+        width: calc(100% - 3rem);
+        margin-top: 0;
+    }
+    
+    .mobile-lang-menu li {
+        padding: 0.8rem 1rem;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        transform-origin: center;
+    }
+    
+    .mobile-lang-menu li:hover {
+        background: var(--soft-purple);
+        color: white;
+        transform: scale(1.02);
+        padding-left: 1.2rem;
+    }
+    
+    body.rtl .mobile-lang-menu li:hover {
+        padding-left: 1rem;
+        padding-right: 1.2rem;
+    }
+    
+    /* CTA button in mobile menu */
+    .mobile-cta-btn {
+        background: linear-gradient(135deg, var(--accent-pink), var(--soft-purple));
+        color: white;
+        padding: 1rem;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        text-align: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-top: 0.5rem;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.3s ease 0.35s;
+    }
+    
+    .mobile-nav-container.active .mobile-cta-btn {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .mobile-cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(var(--accent-pink-rgb), 0.4);
+    }
+    
+    /* Adjust hero section for mobile - FIX FOR ARABIC */
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 85px 5% 3rem;
     }
 
-    .nav-links.active {
-        display: flex;
+    /* Make phone mockup appear below text on mobile - FIXED FOR ARABIC */
+    .hero-content {
+        order: 1;
+        margin-bottom: 3rem;
+    }
+
+    .hero-image {
+        order: 2;
+        animation: floatPhone 3s ease-in-out infinite;
+    }
+
+    .phone-mockup {
+        width: 280px;
+        height: 560px;
+        margin-top: 0;
+        transition: all 0.5s ease;
+    }
+
+    /* Adjust hero content spacing */
+    .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1.2rem;
+        transition: all 0.5s ease;
+    }
+    
+    .hero p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        transition: all 0.5s ease;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
     }
 }
 
+/* ===== TABLET (768px and below) ===== */
+@media (max-width: 768px) {
+    .mobile-nav-container {
+        top: 65px;
+    }
+    
+    /* Hide mode label on tablet too */
+    .mode-label {
+        display: none;
+    }
+    
+    .cta-section h2 {
+        font-size: 2rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    .cta-section p {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .cta-section .primary-btn {
+        padding: 0.85rem 1.8rem;
+        font-size: 0.95rem;
+        min-width: 160px;
+    }
+}
+
+/* ===== SMALL MOBILE (480px and below) ===== */
+@media (max-width: 480px) {
+    nav {
+        padding: 0.7rem 4%;
+        height: 65px;
+    }
+    
+    .hero {
+        padding: 75px 4% 2rem;
+    }
+    
+    .mobile-nav-container {
+        top: 65px;
+        padding: 1rem;
+    }
+    
+    .mobile-nav-links a {
+        font-size: 1rem;
+        padding: 0.8rem 0;
+    }
+    
+    .mobile-mode-switcher {
+        padding: 0.3rem 0;
+    }
+    
+    .mobile-mode-label {
+        font-size: 0.95rem;
+    }
+    
+    .mobile-mode-toggle {
+        width: 48px;
+        height: 26px;
+    }
+    
+    .mobile-mode-toggle:before {
+        width: 18px;
+        height: 18px;
+    }
+    
+    body.dark-mode .mobile-mode-toggle:before {
+        transform: translateX(22px);
+    }
+    
+    .mobile-lang-btn {
+        padding: 0.7rem 0.9rem;
+        font-size: 0.95rem;
+    }
+    
+    /* Adjust language menu position for smaller screens */
+    .mobile-lang-selector.open .mobile-lang-menu {
+        left: 1rem;
+        right: 1rem;
+        width: calc(100% - 2rem);
+    }
+    
+    .mobile-cta-btn {
+        padding: 0.9rem;
+        font-size: 0.95rem;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .primary-btn, .secondary-btn {
+        width: 100%;
+        max-width: 250px;
+        text-align: center;
+        padding: 0.9rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .phone-mockup {
+        width: 250px;
+        height: 500px;
+    }
+    
+    /* CTA Section mobile phone adjustments */
+    .cta-section {
+        padding: 3rem 4%;
+    }
+    
+    .cta-section h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+    
+    .cta-section p {
+        font-size: 0.95rem;
+        margin-bottom: 1.8rem;
+        line-height: 1.6;
+    }
+    
+    .cta-section .primary-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+        min-width: 140px;
+        width: 100%;
+        max-width: 250px;
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+/* ===== EXTRA SMALL MOBILE (350px and below) ===== */
+@media (max-width: 350px) {
+    .logo-text {
+        font-size: 1.1rem;
+    }
+    
+    .logo-icon {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .mobile-mode-toggle {
+        width: 42px;
+        height: 24px;
+    }
+    
+    .mobile-mode-toggle:before {
+        width: 16px;
+        height: 16px;
+        top: 4px;
+        left: 4px;
+    }
+    
+    body.dark-mode .mobile-mode-toggle:before {
+        transform: translateX(18px);
+    }
+    
+    .phone-mockup {
+        width: 220px;
+        height: 440px;
+    }
+    
+    /* CTA Section extra small phone adjustments */
+    .cta-section h2 {
+        font-size: 1.6rem;
+    }
+    
+    .cta-section p {
+        font-size: 0.9rem;
+    }
+    
+    .cta-section .primary-btn {
+        padding: 0.7rem 1.3rem;
+        font-size: 0.85rem;
+        min-width: 130px;
+    }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+        max-height: 0;
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 600px;
+    }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes slideInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floatPhone {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+    }
+    50% { 
+        transform: translateY(-20px) rotate(2deg); 
+    }
+}
+.app-logo
+
+{
+    border-radius: 8px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+}
 .hero-image,
 .phone-mockup {
     max-width: 100%;
@@ -1246,6 +1969,40 @@ a, button {
         display: none;
     }
 }
+/* ===== RTL SUPPORT ===== */
+body.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+body.rtl .nav-links,
+body.rtl .nav-right-container {
+    flex-direction: row-reverse;
+}
+
+body.rtl .hero {
+    flex-direction: row-reverse;
+}
+
+body.rtl .hero-buttons {
+    justify-content: flex-end;
+}
+
+body.rtl .pricing-features {
+    text-align: right;
+}
+/* ===== Language transition animation ===== */
+.lang-fade {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.lang-fade.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 
 
     </style>
@@ -1258,49 +2015,104 @@ a, button {
     <div class="sad-decoration" id="sadDecorations"></div>
 
     <!-- Navigation -->
-    <nav>
-        <div class="logo-container">
-            <div class="logo-icon">
-                <img src="https://cdn-icons-png.flaticon.com/512/3079/3079165.png" alt="Rise Logo">
-            </div>
-            <span class="logo-text">Rise</span>
+    <!-- Navigation -->
+<nav>
+    <div class="logo-container">
+        <div class="logo-icon">
+            <img src="logo.jpg" alt="Rise Logo" class="app-logo">
         </div>
-        <button class="menu-btn" id="menuBtn">☰</button>
+        <span class="logo-text">Rise</span>
+    </div>
+    <button class="menu-btn" id="menuBtn">☰</button>
 
-        <ul class="nav-links">
-            <li><a href="#features">Features</a></li>
-            <li><a href="#why">Why Rise</a></li>
-            <li><a href="#pricing">Pricing</a></li>
+    <!-- Desktop Navigation -->
+    <ul class="nav-links">
+        <li><a href="#features" data-i18n="nav_features">Features</a></li>
+        <li><a href="#why" data-i18n="nav_why">Why Rise</a></li>
+        <li><a href="#pricing" data-i18n="nav_pricing">Pricing</a></li>
+    </ul>
+    
+    <!-- Desktop Right Side Container -->
+    <div class="nav-right-container">
+        <div class="mode-switcher">
+            <span class="mode-label" id="modeLabel" data-i18n="mode_happy">Happy Mode</span>
+            <div class="mode-toggle" id="modeToggle">
+                <div class="mode-icon sun-icon">☀️</div>
+                <div class="mode-icon moon-icon">🌙</div>
+            </div>
+        </div>
+        <div class="lang-selector">
+            <button class="lang-btn" id="langBtn">
+                <span id="currentLang">English</span>
+                <span class="lang-arrow">▾</span>
+            </button>
+            <ul class="lang-menu" id="langMenu">
+                <li data-lang="en">English</li>
+                <li data-lang="fr">Français</li>
+                <li data-lang="ar">العربية</li>
+            </ul>
+        </div>
+        <a href="#download" class="cta-btn" data-i18n="download_app">Download App</a>
+    </div>
+    
+    <!-- Mobile Navigation Container (Hidden by default) -->
+    <div class="mobile-nav-container" id="mobileNavContainer">
+        <!-- Mobile Navigation Links -->
+        <ul class="mobile-nav-links">
+            <li><a href="#features" data-i18n="nav_features">Features</a></li>
+            <li><a href="#why" data-i18n="nav_why">Why Rise</a></li>
+            <li><a href="#pricing" data-i18n="nav_pricing">Pricing</a></li>
         </ul>
         
-        <!-- Right side container with mode switcher and CTA button -->
-        <div class="nav-right-container">
-            <div class="mode-switcher">
-                <span class="mode-label" id="modeLabel">Happy Mode</span>
-                <div class="mode-toggle" id="modeToggle">
+        <!-- Mobile Right Side Container -->
+        <div class="mobile-nav-right">
+            <!-- Mobile Mode Switcher -->
+            <div class="mobile-mode-switcher">
+                <span class="mobile-mode-label" id="mobileModeLabel" data-i18n="mode_happy">Happy Mode</span>
+                <div class="mobile-mode-toggle" id="mobileModeToggle">
                     <div class="mode-icon sun-icon">☀️</div>
                     <div class="mode-icon moon-icon">🌙</div>
                 </div>
             </div>
-            <a href="#download" class="cta-btn">Download App</a>
+            
+            <!-- Mobile Language Selector -->
+            <div class="mobile-lang-selector">
+                <button class="mobile-lang-btn" id="mobileLangBtn">
+                    <span id="mobileCurrentLang">English</span>
+                    <span class="lang-arrow">▾</span>
+                </button>
+                <ul class="mobile-lang-menu" id="mobileLangMenu">
+                    <li data-lang="en">English</li>
+                    <li data-lang="fr">Français</li>
+                    <li data-lang="ar">العربية</li>
+                </ul>
+            </div>
+            
+            <!-- Mobile CTA Button -->
+            <a href="#download" class="mobile-cta-btn" data-i18n="download_app">Download App</a>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Find Your Balance with <span>Rise</span></h1>
-            <p>Your personal companion for mental wellness, mindful habits, and daily balance in a screen-dominated world.</p>
-            <div class="hero-buttons">
-                <a href="#download" class="primary-btn">Get Started Free</a>
-                <a href="#features" class="secondary-btn">Learn More</a>
+           <h1 data-i18n="hero_title">
+  Find Your Balance with <span>Rise</span>
+</h1>
+<p data-i18n="hero_desc">
+  Your personal companion for mental wellness, mindful habits, and daily balance in a screen-dominated world.
+</p>            <div class="hero-buttons">
+<a href="#download" class="primary-btn" data-i18n="btn_get_started">Get Started Free</a>
+<a href="#features" class="secondary-btn" data-i18n="btn_learn_more">Learn More</a>
             </div>
         </div>
         <div class="hero-image">
             <div class="phone-mockup">
                 <div class="phone-screen">
                     <div class="phone-logo">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3079/3079165.png" alt="Rise Logo">
+                        <img src="logo.jpg" alt="Rise Logo" class="app-logo">
+
                     </div>
                 </div>
             </div>
@@ -1310,39 +2122,39 @@ a, button {
     <!-- Features Section -->
     <section id="features" class="features">
         <div class="section-header">
-            <h2>Everything You Need for Mental Wellness</h2>
-            <p>Rise combines habit tracking, emotional reflection, and mindfulness activities into one beautiful experience.</p>
+            <h2 data-i18n="features_title">Everything You Need for Mental Wellness</h2>
+            <p data-i18n="features_desc">Rise combines habit tracking, emotional reflection, and mindfulness activities into one beautiful experience.</p>
         </div>
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">📝</div>
-                <h3>Habit Management</h3>
-                <p>Create and track personal habits with reminders and progress indicators to build consistency in your daily routines.</p>
+                <h3 data-i18n="feature_habit">Habit Management</h3>
+                <p data-i18n="feature_habit_desc">Create and track personal habits with reminders and progress indicators to build consistency in your daily routines.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">💙</div>
-                <h3>Mood Journaling</h3>
-                <p>Write reflections and track your emotions through an integrated calendar view that connects feelings to your daily experiences.</p>
+                <h3 data-i18n="feature_mood">Mood Journaling</h3>
+                <p data-i18n="feature_mood_desc">Write reflections and track your emotions through an integrated calendar view that connects feelings to your daily experiences.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🧘</div>
-                <h3>Mindful Activities</h3>
-                <p>Engage in breathing exercises, coloring, digital plant growing, and bubble popping to relax and disconnect from stress.</p>
+                <h3 data-i18n="feature_mindful">Mindful Activities</h3>
+                <p data-i18n="feature_mindful_desc">Engage in breathing exercises, coloring, digital plant growing, and bubble popping to relax and disconnect from stress.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">📊</div>
-                <h3>Progress Insights</h3>
-                <p>Visual statistics showing your improvements in habit consistency, journaling frequency, and wellness metrics over time.</p>
+                <h3 data-i18n="feature_progress">Progress Insights</h3>
+                <p data-i18n="feature_progress_desc">Visual statistics showing your improvements in habit consistency, journaling frequency, and wellness metrics over time.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">💧</div>
-                <h3>Wellness Tracking</h3>
+                <h3 data-i18n="feature_wellness">Wellness Tracking</h3>
                 <p>Monitor water intake and screen time with daily summaries and gentle reminders to maintain healthier routines.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🏆</div>
-                <h3>Rewards & Motivation</h3>
-                <p>Earn points and achievements for consistency and progress, building a positive connection between productivity and wellness.</p>
+                <h3 data-i18n="feature_rewards">Rewards & Motivation</h3>
+                <p data-i18n="feature_rewards_desc">Earn points and achievements for consistency and progress, building a positive connection between productivity and wellness.</p>
             </div>
         </div>
     </section>
@@ -1350,25 +2162,25 @@ a, button {
     <!-- Why Choose Section -->
     <section id="why" class="why-choose">
         <div class="section-header">
-            <h2>Why Choose Rise?</h2>
-            <p>Unlike traditional apps, Rise integrates everything you need in one place.</p>
+            <h2 data-i18n="why_title">Why Choose Rise?</h2>
+            <p data-i18n="why_desc">Unlike traditional apps, Rise integrates everything you need in one place.</p>
         </div>
         <div class="why-grid">
             <div class="why-card">
-                <h3>All-in-One Solution</h3>
-                <p>No need for multiple apps—habits, moods, and mindfulness in one place.</p>
+                <h3 data-i18n="why_all_in_one">All-in-One Solution</h3>
+                <p data-i18n="why_all_in_one_desc">No need for multiple apps—habits, moods, and mindfulness in one place.</p>
             </div>
             <div class="why-card">
-                <h3>Gamified Motivation</h3>
-                <p>Stay engaged with rewards, achievements, and fun challenges.</p>
+                <h3 data-i18n="why_gamified">Gamified Motivation</h3>
+                <p data-i18n="why_gamified_desc">Stay engaged with rewards, achievements, and fun challenges.</p>
             </div>
             <div class="why-card">
-                <h3>Data-Driven Insights</h3>
-                <p>Understand your patterns with visual analytics and progress tracking.</p>
+                <h3 data-i18n="why_data_driven">Data-Driven Insights</h3>
+                <p data-i18n="why_data_driven_desc">Understand your patterns with visual analytics and progress tracking.</p>
             </div>
             <div class="why-card">
-                <h3>Designed for You</h3>
-                <p>Beautiful, calming interface that makes self-care enjoyable.</p>
+                <h3 data-i18n="why_designed_for_you">Designed for You</h3>
+                <p data-i18n="why_designed_for_you_desc">Beautiful, calming interface that makes self-care enjoyable.</p>
             </div>
         </div>
     </section>
@@ -1376,43 +2188,43 @@ a, button {
     <!-- Pricing Section -->
     <section id="pricing" class="pricing">
         <div class="section-header">
-            <h2>Choose Your Plan</h2>
-            <p>Start free, upgrade anytime to unlock premium features.</p>
+            <h2 data-i18n="pricing_title">Choose Your Plan</h2>
+            <p data-i18n="pricing_desc">Start free, upgrade anytime to unlock premium features.</p>
         </div>
         <div class="pricing-cards">
             <div class="pricing-card">
                 <h3>Free</h3>
                 <div class="price">0 DZD<span>/month</span></div>
                 <ul class="pricing-features">
-                    <li>Basic mood tracker</li>
-                    <li>Daily journaling</li>
-                    <li>Water intake tracking</li>
-                    <li>Limited mindfulness activities</li>
-                    <li>Basic progress insights</li>
+                    <li data-i18n="pricing_free_basic_mood">Basic mood tracker</li>
+                    <li data-i18n="pricing_free_daily_journaling">Daily journaling</li>
+                    <li data-i18n="pricing_free_water_intake">Water intake tracking</li>
+                    <li data-i18n="pricing_free_mindfulness_activities">Limited mindfulness activities</li>
+                    <li data-i18n="pricing_free_progress_insights">Basic progress insights</li>
                 </ul>
-                <a href="#download" class="secondary-btn">Get Started</a>
+                <a href="#download" class="secondary-btn" data-i18n="btn_get_started">Get Started</a>
             </div>
             <div class="pricing-card featured">
-                <h3>Premium</h3>
-                <div class="price">999 DZD<span>/month</span></div>
+                <h3 data-i18n="pricing_premium">Premium</h3>
+                <div class="price"data-i18n="pricing_premium_price">999 DZD<span>/month</span></div>
                 <ul class="pricing-features">
-                    <li>Unlimited habits</li>
-                    <li>Advanced analytics</li>
-                    <li>All mindfulness games</li>
-                    <li>Custom challenges</li>
-                    <li>Priority support</li>
-                    <li>Ad-free experience</li>
+                    <li data-i18n="pricing_premium_unlimited_habits">Unlimited habits</li>
+                    <li data-i18n="pricing_premium_advanced_analytics">Advanced analytics</li>
+                    <li data-i18n="pricing_premium_all_mindfulness_games">All mindfulness games</li>
+                    <li data-i18n="pricing_premium_custom_challenges">Custom challenges</li>
+                    <li data-i18n="pricing_premium_priority_support">Priority support</li>
+                    <li data-i18n="pricing_premium_ad_free_experience">Ad-free experience</li>
                 </ul>
-                <a href="#download" class="primary-btn">Upgrade Now</a>
+                <a href="#download" class="primary-btn" data-i18n="btn_upgrade_now">Upgrade Now</a>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
     <section id="download" class="cta-section">
-        <h2>Ready to Rise?</h2>
-        <p>Join thousands of users building healthier, more balanced lives.</p>
-        <a href="#" class="primary-btn">Coming Soon to Play Store</a>
+        <h2 data-i18n="cta_ready_to_rise">Ready to Rise?</h2>
+        <p data-i18n="cta_join_thousands">Join thousands of users building healthier, more balanced lives.</p>
+        <a href="#" class="primary-btn" data-i18n="cta_coming_soon">Coming Soon to Play Store</a>
     </section>
 
     <!-- Footer -->
@@ -1421,30 +2233,31 @@ a, button {
             <div class="footer-section">
                 <div class="footer-logo">
                     <div class="footer-logo-icon">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3079/3079165.png" alt="Rise Logo">
+                     <img src="logo.jpg" alt="Rise Logo" class="app-logo">
+
                     </div>
-                    <span class="footer-logo-text">Rise</span>
+                  
                 </div>
-                <p>Your mental wellness companion for a balanced, focused, and healthier life.</p>
+                <p data-i18n="footer_description">Your mental wellness companion for a balanced, focused, and healthier life.</p>
             </div>
             <div class="footer-section">
-                <h3>Product</h3>
+                <h3 data-i18n="footer_product">Product</h3>
                 <ul>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#download">Download</a></li>
+                    <li><a href="#features" data-i18n="footer_features">Features</a></li>
+                    <li><a href="#pricing" data-i18n="footer_pricing">Pricing</a></li>
+                    <li><a href="#download" data-i18n="footer_download">Download</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h3>Company</h3>
                 <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#" data-i18n="footer_about_us">About Us</a></li>
+                    <li><a href="#" data-i18n="footer_contact">Contact</a></li>
+                    <li><a href="#" data-i18n="footer_privacy_policy">Privacy Policy</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h3>Connect</h3>
+                <h3 data-i18n="footer_connect">Connect</h3>
                 <ul>
                     <li><a href="#">Instagram</a></li>
                     <li><a href="#">TikTok</a></li>
@@ -1452,7 +2265,7 @@ a, button {
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Rise. All rights reserved. Made with 💜 for mental wellness.</p>
+            <p data-i18n="footer_copyright">&copy; 2025 Rise. All rights reserved. Made with love for mental wellness.</p>
         </div>
     </footer>
 
@@ -1463,8 +2276,10 @@ a, button {
         const body = document.body;
         const happyDecorations = document.getElementById('happyDecorations');
         const sadDecorations = document.getElementById('sadDecorations');
-        
-        // Initialize decorations
+      
+
+
+                // Initialize decorations
         function initializeDecorations() {
             // Create happy decorations (stars, sparkles, and plants)
             for (let i = 0; i < 40; i++) {
@@ -1540,27 +2355,28 @@ a, button {
         }
         
         // Toggle between Happy Mode (Light) and Sad Mode (Dark)
-        function toggleMode() {
-            const isDarkMode = body.classList.toggle('dark-mode');
-            
-            // Update label and toggle state
-            if (isDarkMode) {
-                modeLabel.textContent = 'Sad Mode';
-                modeToggle.style.background = 'linear-gradient(135deg, var(--soft-purple), var(--accent-pink))';
-            } else {
-                modeLabel.textContent = 'Happy Mode';
-                modeToggle.style.background = 'linear-gradient(135deg, var(--accent-pink), var(--soft-purple))';
-            }
-            
-            // Add emotional transition effect
-            body.style.opacity = '0.8';
-            setTimeout(() => {
-                body.style.opacity = '1';
-            }, 300);
-            
-            // Save preference to localStorage
-            localStorage.setItem('riseMode', isDarkMode ? 'dark' : 'light');
-        }
+function toggleMode() {
+  const isDarkMode = body.classList.toggle('dark-mode');
+  updateLogos(isDarkMode);
+
+  modeLabel.dataset.i18n = isDarkMode ? "mode_sad" : "mode_happy";
+  applyLanguage(localStorage.getItem("riseLang") || "en");
+
+  modeToggle.style.background = isDarkMode
+    ? 'linear-gradient(135deg, var(--soft-purple), var(--accent-pink))'
+    : 'linear-gradient(135deg, var(--accent-pink), var(--soft-purple))';
+
+  localStorage.setItem('riseMode', isDarkMode ? 'dark' : 'light');
+}
+
+function initializeMode() {
+  const savedMode = localStorage.getItem('riseMode') === 'dark';
+  body.classList.toggle('dark-mode', savedMode);
+  updateLogos(savedMode);
+
+  modeLabel.dataset.i18n = savedMode ? "mode_sad" : "mode_happy";
+}
+
         
         // Check for saved preference
         function initializeMode() {
@@ -1569,8 +2385,18 @@ a, button {
                 body.classList.add('dark-mode');
                 modeLabel.textContent = 'Sad Mode';
                 modeToggle.style.background = 'linear-gradient(135deg, var(--soft-purple), var(--accent-pink))';
+                updateLogos(true);
+            } else {
+                updateLogos(false);
             }
+
         }
+        function updateLogos(isDark) {
+    document.querySelectorAll('.app-logo').forEach(logo => {
+        logo.src = isDark ? 'logodark.svg' : 'logo.jpg';
+    });
+}
+
         
         // Initialize everything when page loads
         document.addEventListener('DOMContentLoaded', () => {
@@ -1579,30 +2405,463 @@ a, button {
             
             // Add click event to mode toggle
             modeToggle.addEventListener('click', toggleMode);
-            const menuBtn = document.getElementById('menuBtn');
-            const navLinks = document.querySelector('.nav-links');
+// Mobile menu functionality
+const menuBtn = document.getElementById('menuBtn');
+const mobileNavContainer = document.getElementById('mobileNavContainer');
+const heroSection = document.querySelector('.hero');
 
-            menuBtn.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
-                        
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 70, // Adjusted for smaller nav
-                            behavior: 'smooth'
-                        });
-                    }
+menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    mobileNavContainer.classList.toggle('active');
+    menuBtn.textContent = mobileNavContainer.classList.contains('active') ? '✕' : '☰';
+});
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.mobile-nav-container') && !e.target.closest('.menu-btn')) {
+        mobileNavContainer.classList.remove('active');
+        menuBtn.textContent = '☰';
+    }
+});
+// Fix for Arabic RTL - ensure phone mockup stays below text on mobile
+function fixArabicLayout() {
+    if (document.body.classList.contains('rtl') && window.innerWidth <= 968) {
+        // Ensure hero maintains column layout in Arabic
+        const hero = document.querySelector('.hero');
+        if (hero) {
+            hero.style.flexDirection = 'column';
+            hero.style.textAlign = 'right';
+        }
+        
+        // Ensure hero-content is first, hero-image is second
+        const heroContent = document.querySelector('.hero-content');
+        const heroImage = document.querySelector('.hero-image');
+        if (heroContent && heroImage) {
+            heroContent.style.order = '1';
+            heroImage.style.order = '2';
+        }
+    }
+}
+
+// Call fix on language change and window resize
+window.addEventListener('resize', fixArabicLayout);
+
+// Also fix when Arabic is selected
+const mobileLangMenu = document.getElementById('mobileLangMenu');
+mobileLangMenu.querySelectorAll('li').forEach(item => {
+    item.addEventListener('click', () => {
+        setTimeout(fixArabicLayout, 100);
+    });
+});
+// Close menu when clicking a link
+document.querySelectorAll('.mobile-nav-container a').forEach(link => {
+    link.addEventListener('click', () => {
+        mobileNavContainer.classList.remove('active');
+        menuBtn.textContent = '☰';
+    });
+});
+
+// Sync mode toggle between desktop and mobile
+const mobileModeToggle = document.getElementById('mobileModeToggle');
+const mobileModeLabel = document.getElementById('mobileModeLabel');
+
+// Update mobile mode switcher when desktop mode changes
+modeToggle.addEventListener('click', () => {
+    setTimeout(() => {
+        const isDarkMode = body.classList.contains('dark-mode');
+        mobileModeLabel.dataset.i18n = isDarkMode ? "mode_sad" : "mode_happy";
+        applyLanguage(localStorage.getItem("riseLang") || "en");
+    }, 100);
+});
+
+// Mobile mode toggle functionality
+mobileModeToggle.addEventListener('click', () => {
+    toggleMode();
+    setTimeout(() => {
+        const isDarkMode = body.classList.contains('dark-mode');
+        mobileModeLabel.dataset.i18n = isDarkMode ? "mode_sad" : "mode_happy";
+        applyLanguage(localStorage.getItem("riseLang") || "en");
+    }, 100);
+});
+
+// Mobile language selector
+const mobileLangBtn = document.getElementById('mobileLangBtn');
+
+const mobileCurrentLang = document.getElementById('mobileCurrentLang');
+
+mobileLangBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    mobileLangBtn.parentElement.classList.toggle('open');
+});
+
+mobileLangMenu.querySelectorAll('li').forEach(item => {
+    item.addEventListener('click', () => {
+        const lang = item.dataset.lang;
+        mobileCurrentLang.textContent = item.textContent;
+        currentLang.textContent = item.textContent; // Sync with desktop
+        applyLanguage(lang);
+        mobileLangBtn.parentElement.classList.remove('open');
+        document.querySelectorAll('.lang-selector').forEach(el => el.classList.remove('open'));
+    });
+});
+
+// Sync language selection between desktop and mobile
+document.querySelectorAll('.lang-menu li').forEach(item => {
+    item.addEventListener('click', () => {
+        mobileCurrentLang.textContent = item.textContent;
+    });
+});
+
+// Initialize mobile mode switcher
+function initializeMobileMode() {
+    const savedMode = localStorage.getItem('riseMode') === 'dark';
+    mobileModeLabel.dataset.i18n = savedMode ? "mode_sad" : "mode_happy";
+    applyLanguage(localStorage.getItem("riseLang") || "en");
+}
+
+// Initialize everything when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    initializeDecorations();
+    initializeMode();
+    initializeMobileMode();
+    
+    // Add click event to mode toggles
+    modeToggle.addEventListener('click', toggleMode);
+    mobileModeToggle.addEventListener('click', toggleMode);
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 70,
+                    behavior: 'smooth'
                 });
-            });
+            }
         });
-    </script>
+    });
+});    
+
+            // Language dropdown logic
+const translations = {
+    en: {
+    nav_features: "Features",
+    nav_why: "Why Rise",
+    nav_pricing: "Pricing",
+
+    hero_title: "Find Your Balance with <span>Rise</span>",
+    hero_desc: "Your personal companion for mental wellness, mindful habits, and daily balance in a screen-dominated world.",
+
+    btn_get_started: "Get Started Free",
+    btn_learn_more: "Learn More",
+    btn_upgrade_now: "Upgrade Now",
+
+    features_title: "Everything You Need for Mental Wellness",
+    features_desc: "Rise combines habit tracking, emotional reflection, and mindfulness activities into one beautiful experience.",
+
+    feature_habit: "Habit Management",
+    feature_habit_desc: "Create and track personal habits with reminders and progress indicators to build consistency in your daily routines.",
+
+    feature_mood: "Mood Journaling",
+    feature_mood_desc: "Write reflections and track your emotions through an integrated calendar view that connects feelings to your daily experiences.",
+
+    feature_mindful: "Mindful Activities",
+    feature_progress: "Progress Insights",
+    feature_progress_desc: "Visual statistics showing your improvements in habit consistency, journaling frequency, and wellness metrics over time.",
+
+    feature_wellness: "Wellness Tracking",
+    feature_rewards: "Rewards & Motivation",
+    feature_rewards_desc: "Earn points and achievements for consistency and progress, building a positive connection between productivity and wellness.",
+
+    why_title: "Why Choose Rise?",
+    why_desc: "Unlike traditional apps, Rise integrates everything you need in one place.",
+
+    why_all_in_one: "All-in-One Solution",
+    why_gamified: "Gamified Motivation",
+    why_data_driven: "Data-Driven Insights",
+    why_designed_for_you: "Designed for You",
+
+    pricing_title: "Choose Your Plan",
+    pricing_desc: "Start free, upgrade anytime to unlock premium features.",
+
+    pricing_free_basic_mood: "Basic mood tracker",
+    pricing_free_daily_journaling: "Daily journaling",
+    pricing_free_water_intake: "Water intake tracking",
+    pricing_free_mindfulness_activities: "Limited mindfulness activities",
+    pricing_free_progress_insights: "Basic progress insights",
+
+    pricing_premium: "Premium",
+    pricing_premium_price: "999 DZD<span>/month</span>",
+    pricing_premium_unlimited_habits: "Unlimited habits",
+    pricing_premium_advanced_analytics: "Advanced analytics",
+    pricing_premium_all_mindfulness_games: "All mindfulness games",
+    pricing_premium_custom_challenges: "Custom challenges",
+    pricing_premium_priority_support: "Priority support",
+    pricing_premium_ad_free_experience: "Ad-free experience",
+
+    cta_ready_to_rise: "Ready to Rise?",
+    cta_join_thousands: "Join thousands of users building healthier, more balanced lives.",
+    cta_coming_soon: "Coming Soon to Play Store",
+
+    footer_description: "Your mental wellness companion for a balanced, focused, and healthier life.",
+    footer_product: "Product",
+    footer_features: "Features",
+    footer_pricing: "Pricing",
+    footer_download: "Download",
+    footer_about_us: "About Us",
+    footer_contact: "Contact",
+    footer_privacy_policy: "Privacy Policy",
+    footer_connect: "Connect",
+    footer_copyright: "© 2025 Rise. All rights reserved. Made with love for mental wellness.",
+ download_app: "Download App",
+mode_happy: "Happy Mode",
+mode_sad: "Sad Mode",
+
+},
+
+
+
+  /* ===================== FRENCH ===================== */
+  fr: {
+    nav_features: "Fonctionnalités",
+    nav_why: "Pourquoi Rise",
+    nav_pricing: "Tarifs",
+
+    hero_title: "Trouvez votre équilibre avec <span>Rise</span>",
+    hero_desc: "Votre compagnon personnel pour le bien-être mental, les habitudes conscientes et l’équilibre quotidien.",
+
+    btn_get_started: "Commencer gratuitement",
+    btn_learn_more: "En savoir plus",
+    btn_upgrade_now: "Passer à Premium",
+
+    features_title: "Tout pour votre bien-être mental",
+    features_desc: "Rise combine le suivi des habitudes, la réflexion émotionnelle et la pleine conscience dans une seule expérience.",
+
+    feature_habit: "Gestion des habitudes",
+    feature_habit_desc: "Créez et suivez vos habitudes avec des rappels et des indicateurs de progression pour plus de régularité.",
+
+    feature_mood: "Journal émotionnel",
+    feature_mood_desc: "Notez vos émotions et réflexions grâce à un calendrier interactif reliant vos sentiments à vos journées.",
+
+    feature_mindful: "Activités de pleine conscience",
+    feature_progress: "Suivi des progrès",
+    feature_progress_desc: "Statistiques visuelles montrant vos progrès en habitudes, journalisation et bien-être.",
+
+    feature_wellness: "Suivi du bien-être",
+    feature_rewards: "Récompenses & motivation",
+    feature_rewards_desc: "Gagnez des points et des récompenses pour rester motivé et constant.",
+
+    why_title: "Pourquoi choisir Rise ?",
+    why_desc: "Contrairement aux applications classiques, Rise regroupe tout au même endroit.",
+
+    why_all_in_one: "Solution tout-en-un",
+    why_gamified: "Motivation ludique",
+    why_data_driven: "Analyses basées sur les données",
+    why_designed_for_you: "Conçu pour vous",
+
+    pricing_title: "Choisissez votre formule",
+    pricing_desc: "Commencez gratuitement et passez à Premium à tout moment.",
+
+    pricing_free_basic_mood: "Suivi d’humeur basique",
+    pricing_free_daily_journaling: "Journal quotidien",
+    pricing_free_water_intake: "Suivi de l’hydratation",
+    pricing_free_mindfulness_activities: "Activités limitées",
+    pricing_free_progress_insights: "Analyses simples",
+
+    pricing_premium: "Premium",
+    pricing_premium_price: "999 DZD<span>/mois</span>",
+    pricing_premium_unlimited_habits: "Habitudes illimitées",
+    pricing_premium_advanced_analytics: "Analyses avancées",
+    pricing_premium_all_mindfulness_games: "Tous les jeux bien-être",
+    pricing_premium_custom_challenges: "Défis personnalisés",
+    pricing_premium_priority_support: "Support prioritaire",
+    pricing_premium_ad_free_experience: "Sans publicité",
+
+    cta_ready_to_rise: "Prêt à vous élever ?",
+    cta_join_thousands: "Rejoignez des milliers d’utilisateurs vers une vie plus équilibrée.",
+    cta_coming_soon: "Bientôt disponible sur Play Store",
+
+    footer_description: "Votre compagnon bien-être pour une vie plus saine et équilibrée.",
+    footer_product: "Produit",
+    footer_features: "Fonctionnalités",
+    footer_pricing: "Tarifs",
+    footer_download: "Télécharger",
+    footer_about_us: "À propos",
+    footer_contact: "Contact",
+    footer_privacy_policy: "Politique de confidentialité",
+    footer_connect: "Réseaux",
+    footer_copyright: "© 2025 Rise. Tous droits réservés.",
+    feature_mindful_desc:
+"Respirez, coloriez, cultivez des plantes numériques et détendez-vous grâce à des activités apaisantes.",
+
+feature_wellness_desc:
+"Suivez votre consommation d’eau et votre temps d’écran avec des rappels doux.",
+
+why_all_in_one_desc:
+"Plus besoin de plusieurs applications — habitudes, émotions et pleine conscience en un seul endroit.",
+
+why_gamified_desc:
+"Restez motivé grâce aux récompenses, succès et défis amusants.",
+
+why_data_driven_desc:
+"Comprenez vos habitudes grâce à des analyses visuelles et un suivi clair.",
+
+why_designed_for_you_desc:
+"Une interface belle et apaisante qui rend le bien-être agréable.",
+
+download_app: "Télécharger l’application",
+mode_happy: "Mode Joyeux",
+mode_sad: "Mode Triste",
+
+  },
+
+  /* ===================== ARABIC (RTL) ===================== */
+  ar: {
+    nav_features: "الميزات",
+    nav_why: "لماذا Rise",
+    nav_pricing: "الأسعار",
+
+    hero_title: "ابحث عن توازنك مع <span>Rise</span>",
+    hero_desc: "رفيقك الشخصي للصحة النفسية، العادات الواعية، والتوازن اليومي.",
+
+    btn_get_started: "ابدأ مجانًا",
+    btn_learn_more: "اعرف المزيد",
+    btn_upgrade_now: "الترقية الآن",
+
+    features_title: "كل ما تحتاجه لصحتك النفسية",
+    features_desc: "يجمع Rise بين تتبع العادات، المشاعر، وأنشطة الاسترخاء في تجربة واحدة جميلة.",
+
+    feature_habit: "إدارة العادات",
+    feature_habit_desc: "أنشئ وتابع عاداتك مع تذكيرات ومؤشرات تقدم لبناء الاستمرارية.",
+
+    feature_mood: "تدوين المزاج",
+    feature_mood_desc: "دوّن مشاعرك وتأملاتك من خلال تقويم يربط بين مشاعرك وأيامك.",
+
+    feature_mindful: "أنشطة ذهنية",
+    feature_progress: "تحليل التقدم",
+    feature_progress_desc: "إحصائيات مرئية توضح تقدمك في العادات والصحة النفسية.",
+
+    feature_wellness: "تتبع الصحة",
+    feature_rewards: "المكافآت والتحفيز",
+    feature_rewards_desc: "اكسب نقاطًا وإنجازات لتعزيز الاستمرارية والتحفيز.",
+
+    why_title: "لماذا تختار Rise؟",
+    why_desc: "على عكس التطبيقات التقليدية، يجمع Rise كل ما تحتاجه في مكان واحد.",
+
+    why_all_in_one: "حل متكامل",
+    why_gamified: "تحفيز ممتع",
+    why_data_driven: "تحليل مبني على البيانات",
+    why_designed_for_you: "مصمم خصيصًا لك",
+
+    pricing_title: "اختر خطتك",
+    pricing_desc: "ابدأ مجانًا وقم بالترقية في أي وقت.",
+
+    pricing_free_basic_mood: "تتبع مزاج أساسي",
+    pricing_free_daily_journaling: "تدوين يومي",
+    pricing_free_water_intake: "تتبع شرب الماء",
+    pricing_free_mindfulness_activities: "أنشطة ذهنية محدودة",
+    pricing_free_progress_insights: "تحليلات أساسية",
+
+    pricing_premium: "بريميوم",
+    pricing_premium_price: "999 دج<span>/شهريًا</span>",
+    pricing_premium_unlimited_habits: "عادات غير محدودة",
+    pricing_premium_advanced_analytics: "تحليلات متقدمة",
+    pricing_premium_all_mindfulness_games: "جميع الألعاب الذهنية",
+    pricing_premium_custom_challenges: "تحديات مخصصة",
+    pricing_premium_priority_support: "دعم أولوية",
+    pricing_premium_ad_free_experience: "تجربة بدون إعلانات",
+
+    cta_ready_to_rise: "هل أنت مستعد للارتقاء؟",
+    cta_join_thousands: "انضم إلى آلاف المستخدمين لبناء حياة أكثر توازنًا.",
+    cta_coming_soon: "قريبًا على متجر Play",
+
+    footer_description: "رفيقك للصحة النفسية من أجل حياة متوازنة وأكثر صحة.",
+    footer_product: "المنتج",
+    footer_features: "الميزات",
+    footer_pricing: "الأسعار",
+    footer_download: "تحميل",
+    footer_about_us: "من نحن",
+    footer_contact: "اتصل بنا",
+    footer_privacy_policy: "سياسة الخصوصية",
+    footer_connect: "تواصل معنا",
+    footer_copyright: "© 2025 Rise. جميع الحقوق محفوظة.",
+    feature_mindful_desc:
+"مارس تمارين التنفس، التلوين، زراعة النباتات الرقمية، وفقاعات الاسترخاء للتخلص من التوتر.",
+
+feature_wellness_desc:
+"تتبع شرب الماء ووقت الشاشة مع ملخصات يومية وتذكيرات لطيفة.",
+
+why_all_in_one_desc:
+"لا حاجة لاستخدام عدة تطبيقات — العادات والمزاج واليقظة الذهنية في مكان واحد.",
+
+why_gamified_desc:
+"ابقَ متحفزًا من خلال المكافآت والإنجازات والتحديات الممتعة.",
+
+why_data_driven_desc:
+"افهم أنماطك من خلال التحليلات المرئية وتتبع التقدم.",
+
+why_designed_for_you_desc:
+"واجهة جميلة ومهدئة تجعل العناية بنفسك تجربة ممتعة.",
+
+
+    }
+};
+
+/* ===== Language logic ===== */
+const langBtn = document.getElementById("langBtn");
+const langMenu = document.getElementById("langMenu");
+const currentLang = document.getElementById("currentLang");
+
+function applyLanguage(lang) {
+    document.body.classList.toggle("rtl", lang === "ar");
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+        el.classList.remove("show");
+        el.classList.add("lang-fade");
+
+        setTimeout(() => {
+           const key = el.dataset.i18n;
+el.innerHTML =
+    translations[lang][key] ||
+    translations.en[key] ||
+    el.innerHTML;
+
+            el.classList.add("show");
+        }, 150);
+    });
+
+    localStorage.setItem("riseLang", lang);
+}
+
+langBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    langBtn.parentElement.classList.toggle("open");
+});
+
+langMenu.querySelectorAll("li").forEach(item => {
+    item.addEventListener("click", () => {
+        const lang = item.dataset.lang;
+        currentLang.textContent = item.textContent;
+        applyLanguage(lang);
+        langBtn.parentElement.classList.remove("open");
+    });
+});
+
+document.addEventListener("click", () => {
+    document.querySelectorAll(".lang-selector").forEach(el => el.classList.remove("open"));
+});
+
+/* Restore saved language */
+const savedLang = localStorage.getItem("riseLang") || "en";
+const savedItem = langMenu.querySelector(`[data-lang="${savedLang}"]`);
+if (savedItem) currentLang.textContent = savedItem.textContent;
+applyLanguage(savedLang);
+        });
+</script>
 </body>
 </html>
